@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - docker pull katalonstudio/katalon
+  build:
+    commands:
+      - docker run -t --rm -v "$(pwd)":/katalon/katalon/source katalonstudio/katalon katalon-execute.sh -apiKey=1da58538-b476-489f-a87f-35319fd2f27d -browserType="Chrome" -retry=0 -statusDelay=20 -testSuitePath="Test Suites/Demo"
+artifacts:
+  files:
+    - report/*
+reports: #New
+  KatalonTestReports: # CodeBuild will create a report group called "KatalonTestReports".
+    files: #Store all of the files
+      - 'report/JUnit_Report.xml'
